@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <h:head>
+        <link rel="shortcut icon" href="#{resource['images/favicon.ico']}"/>
+        <title>Thomson Reuters</title>
+        <!--STYLESHEETS-->
+        <h:outputStylesheet library="css" name="style.css"  />
+        <h:outputStylesheet library="css" name="trLogin.css"  />
+
+        <!--SCRIPTS-->
+        <!--Slider-in icons-->
+        <script type="text/javascript">
+            $(document).ready(function() {
+                $(".username").focus(function() {
+                    $(".user-icon").css("left", "-48px");
+                });
+                $(".username").blur(function() {
+                    $(".user-icon").css("left", "0px");
+                });
+
+                $(".password").focus(function() {
+                    $(".pass-icon").css("left", "-48px");
+                });
+                $(".password").blur(function() {
+                    $(".pass-icon").css("left", "0px");
+                });
+            });
+        </script>
+        <!--Google Analytics-->
+        <script type="text/javascript">
+
+            var _gaq = _gaq || [];
+            _gaq.push(['_setAccount', 'UA-28197767-1']);
+            _gaq.push(['_trackPageview']);
+
+            (function() {
+                var ga = document.createElement('script');
+                ga.type = 'text/javascript';
+                ga.async = true;
+                ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+                var s = document.getElementsByTagName('script')[0];
+                s.parentNode.insertBefore(ga, s);
+            })();
+
+        </script>
+    </h:head>
+    <h:body>
+        <div id="wrap">
+            <div id="header">
+                <div id="tr_logo"/>
+            </div>
+            <p:ajaxStatus>
+                <f:facet name="start">  
+                    <div id="spinner" style="display: block" />
+                    <div class="loading-indicator" style="display: block" />
+                </f:facet>  
+
+                <f:facet name="complete">  
+                    <div id="spinner" style="display: none" />
+                    <div class="loading-indicator" style="display: none" />
+                </f:facet>  
+            </p:ajaxStatus>
+            <div id="content">
+                <div id="wrapper" >
+                    <div class="user-icon"></div>
+                    <div class="pass-icon"></div>
+                    <h:form id="frm_login" class="login-form" >
+                        <p:growl id="messages" showDetail="true" life="3000"/>
+                        <p:focus id="focus_login" for="it_username" />
+                        <div class="header">
+                            <h1 style="color: orange">Sizing Calculator Thomson Reuters</h1>
+                            <span>Para logar digitar a senha de administrador do sistema.</span>
+                        </div>
+                        <div class="content">
+                            <p:inputText id="it_username" styleClass="font_padrao" style="font-size: 13px;" required="true" requiredMessage="Campo obrigatório." class="input username" value="#{beanLogin.username}" onfocus="this.value = ''" />
+                            <p:password id="it_password"  styleClass="font_padrao" style="font-size: 13px;" required="true" requiredMessage="Campo obrigatório." class="input password" value="#{beanLogin.password}" onfocus="this.value = ''" />
+                        </div>
+                        <div class="footer"><p:commandButton id="cb_login" update="messages frm_login" value="Login" actionListener="#{beanLogin.login(actionEvent)}" class="button" 
+                                                                oncomplete="handleLoginRequest(xhr, status, args)"/>
+                        </div>
+                    </h:form>
+                    <script type="text/javascript">
+                        function handleLoginRequest(xhr, status, args) {
+                            if (args.validationFailed || !args.loggedIn) {
+                                $('#wrapper').effect("shake", {times: 5}, 1000);
+                            } else {
+                                $('#wrapper').hide();
+                                $('#wrapper').fadeOut();
+                                self.location='trMain.xhtml';
+                            }
+                        }
+                    </script>
+                </div>
+            </div>
+            <div id="footer">
+
+            </div>
+        </div>
+    </h:body>
+</html>

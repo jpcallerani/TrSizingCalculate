@@ -1,0 +1,103 @@
+@font-face {
+  font-family: 'Bree Serif';
+  font-style: normal;
+  font-weight: 400;
+  src: url("#{resource['font:Bree Serif.woff']}");
+}
+
+.ui-growl {
+    z-index: 999999 !important;
+}
+
+.ui-growl-message {
+    font-size: 14px;
+    letter-spacing: -1px;
+}
+
+* {
+    margin:0;
+    padding:0;
+}
+
+html, body {
+    height:100%;
+}
+
+#wrap {
+    min-height:100%;
+
+}
+
+#header {
+    height: 50px;
+    background-image: url("#{resource['images:bg_header.png']}");
+    border-bottom: 1px solid #C9C9C9;
+}
+
+#content {
+    padding-bottom: 100%;
+    height: 100%;
+    background-image: url("#{resource['images:Background.jpg']}");
+}
+
+#footer {
+    border-top: 1px solid #C9C9C9;
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    height: 80px;
+    width: 100%;
+    background-image: url("#{resource['images:bg_header.png']}");
+}
+
+
+#op_login {
+    font-family: Arial,Verdana,Sans-Serif;
+    font-size: 14px;
+    border: 1px solid #C9C9C9;
+    position:absolute;
+    top:40%;
+    left:40%;
+    margin-top:-50px;
+    margin-left:-50px;
+}
+
+
+#tr_logo {
+    background-image: url("#{resource['images:thomson-reuters-header.png']}");
+    background-repeat: no-repeat;
+    float: right;
+    height: 24px;
+    margin-top: -12px;
+    margin-right: 15px;
+    position: relative;
+    width: 171px;
+    top: 50%;
+}
+
+#spinner {
+    width: 100%;
+    height: 100%;
+    display: none;
+    position: fixed;
+    text-align:center;
+    z-index:2;
+    overflow: auto;
+    background: white;
+    opacity:0.6;
+    z-index: 1;
+}  
+
+.loading-indicator {
+    position: fixed;
+    top: 35%;
+    left: 45%;
+    height: 128px;
+    width: 128px;
+    z-index: 999999;
+    background-image: url("#{resource['images:preloader.gif']}");
+}
+
+.font_padrao {
+    font-family: Lucida Grande,Lucida Sans,Arial,sans-serif !important;
+}

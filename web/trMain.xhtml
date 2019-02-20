@@ -1,0 +1,229 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:pe="http://primefaces.org/ui/extensions">
+    <h:head>
+        <h:outputStylesheet library="css" name="index.css"  />
+        <h:outputScript library="js" name="locale.js" />
+        <link rel="shortcut icon" href="#{resource['images/favicon.ico']}"/>
+        <title>Thomson Reuters</title>
+    </h:head>
+    <h:body>
+        <div id="wrap">
+            <div id="header">
+                <h:form>
+                    <p:commandLink action="trMain.xhtml?faces-redirect=true">
+                        <div id="tr_logo"/>
+                    </p:commandLink>
+                </h:form>
+            </div>
+            <p:ajaxStatus>
+                <f:facet name="start">  
+                    <div id="spinner" style="display: block" />
+                    <div class="loading-indicator" style="display: block" />
+                </f:facet>  
+
+                <f:facet name="complete">  
+                    <div id="spinner" style="display: none" />
+                    <div class="loading-indicator" style="display: none" />
+                </f:facet>  
+            </p:ajaxStatus>
+            <div id="content">
+                <ui:insert name="centro">
+                    <h:form id="frm_gera_sizing">
+                        <p:growl id="growl_envia" life="2000" showDetail="true" />
+                        <p:fieldset legend="CLIENTE" style="font-size: 12px; font-family: Lucida Grande,Lucida Sans,Arial,sans-serif;">
+                            <p:tooltip for="it_cliente" value="Digite o nome do cliente." style="font-size: 11px; font-family: Lucida Grande,Lucida Sans,Arial,sans-serif;"/>
+                            <p:inputText id="it_cliente" value="#{beanMain.nome_cliente}" required="true" style="width:300px !important" requiredMessage="Nome do cliente obrigatório."/>
+                        </p:fieldset>
+                        <p:fieldset legend="0 - NÚCLEO COMUM" toggleable="true" collapsed="true"  style="font-size: 12px; font-family: Lucida Grande,Lucida Sans,Arial,sans-serif;">
+                            <p:dataTable var="nucleo_comum"  id="dt_nucleo_comum" style="table-layout: fixed; font-size: 12px; margin-top: 10px; font-family: Lucida Grande,Lucida Sans,Arial,sans-serif;" 
+                                         paginator="false" value="#{beanMain.nucleo_comum}" >
+                                <p:column headerText="ENTIDADE" width="200">
+                                    <h:outputText value="#{nucleo_comum.entidade}"/>
+                                </p:column>
+                                <p:column headerText="ID." width="10" style="text-align: center">
+                                    <h:outputText value="#{nucleo_comum.id}"/>
+                                </p:column>
+                                <p:column headerText="QUESTÃO">
+                                    <h:outputText value="#{nucleo_comum.questao}"/>
+                                </p:column>
+                                <p:column headerText="SIM / NÃO"  width="100" style="text-align: center">
+                                    <p:selectOneMenu id="console" value="#{nucleo_comum.respostaSimNao}" style="width:70px !important">
+                                        <f:selectItem itemLabel="Sim" itemValue="S" />
+                                        <f:selectItem itemLabel="Não" itemValue="N" />
+                                    </p:selectOneMenu>
+                                </p:column>
+                                <p:column headerText="QTDE. INICIAL (MIGRAÇÃO)" width="100" style="text-align: center">
+                                    <p:inputText value="#{nucleo_comum.qtdeInicial}" style="width:90px !important; text-align: center"/>
+                                </p:column>
+                                <p:column headerText="PERCENTUAL (%) CRESCIMENTO MENSAL" width="100"  style="text-align: center">  
+                                    <p:inputText value="#{nucleo_comum.percCrescimentoMensal}" style="width:90px !important; text-align: center"/>
+                                </p:column>                     
+                                <p:column headerText="QTDE. MENSAL" width="100"  style="text-align: center">  
+                                    <p:inputText value="#{nucleo_comum.qtdeMensal}" style="width:90px !important; text-align: center"/>
+                                </p:column>
+                            </p:dataTable>
+                        </p:fieldset>
+                        <p:fieldset legend="9/21 - IMPORTAÇÃO" toggleable="true" collapsed="true" style="font-size: 12px; font-family: Lucida Grande,Lucida Sans,Arial,sans-serif;">
+                            <p:dataTable var="importacao" id="dt_importacao" style="table-layout: fixed; font-size: 12px; margin-top: 10px; font-family: Lucida Grande,Lucida Sans,Arial,sans-serif;" 
+                                         paginator="false" value="#{beanMain.importacao}"  editable="true" editMode="cell">
+                                <p:column headerText="ENTIDADE" width="200">
+                                    <h:outputText value="#{importacao.entidade}"/>
+                                </p:column>
+                                <p:column headerText="ID." width="10" style="text-align: center">
+                                    <h:outputText value="#{importacao.id}"/>
+                                </p:column>
+                                <p:column headerText="QUESTÃO">
+                                    <h:outputText value="#{importacao.questao}"/>
+                                </p:column>
+                                <p:column headerText="SIM / NÃO"  width="100" style="text-align: center">
+                                    <p:selectOneMenu id="console" value="#{importacao.respostaSimNao}" style="width:70px !important">
+                                        <f:selectItem itemLabel="Sim" itemValue="S" />
+                                        <f:selectItem itemLabel="Não" itemValue="N" />
+                                    </p:selectOneMenu>
+                                </p:column>
+                                <p:column headerText="QTDE. INICIAL (MIGRAÇÃO)" width="100" style="text-align: center">
+                                    <p:inputText value="#{importacao.qtdeInicial}" style="width:90px !important; text-align: center"/>
+                                </p:column>
+                                <p:column headerText="PERCENTUAL (%) CRESCIMENTO MENSAL" width="100"  style="text-align: center">  
+                                    <p:inputText value="#{importacao.percCrescimentoMensal}" style="width:90px !important; text-align: center"/>
+                                </p:column>                     
+                                <p:column headerText="QTDE. MENSAL" width="100"  style="text-align: center">  
+                                    <p:inputText value="#{importacao.qtdeMensal}" style="width:90px !important; text-align: center"/>
+                                </p:column>  
+                            </p:dataTable>
+                        </p:fieldset>
+                        <p:fieldset legend="10 - CÂMBIO IMPORTAÇÃO" toggleable="true" collapsed="true" style="font-size: 12px; font-family: Lucida Grande,Lucida Sans,Arial,sans-serif;">
+                            <p:dataTable var="cambio_imp" id="dt_cambio_imp" style="table-layout: fixed; font-size: 12px; margin-top: 10px; font-family: Lucida Grande,Lucida Sans,Arial,sans-serif;" 
+                                         paginator="false" value="#{beanMain.cambio_imp}"  editable="true" editMode="cell">
+                                <p:column headerText="ENTIDADE" width="200">
+                                    <h:outputText value="#{cambio_imp.entidade}"/>
+                                </p:column>
+                                <p:column headerText="ID." width="10" style="text-align: center">
+                                    <h:outputText value="#{cambio_imp.id}"/>
+                                </p:column>
+                                <p:column headerText="QUESTÃO">
+                                    <h:outputText value="#{cambio_imp.questao}"/>
+                                </p:column>
+                                <p:column headerText="SIM / NÃO"  width="100" style="text-align: center">
+                                    <p:selectOneMenu id="console" value="#{cambio_imp.respostaSimNao}" style="width:70px !important">
+                                        <f:selectItem itemLabel="Sim" itemValue="S" />
+                                        <f:selectItem itemLabel="Não" itemValue="N" />
+                                    </p:selectOneMenu>
+                                </p:column>
+                                <p:column headerText="QTDE. INICIAL (MIGRAÇÃO)" width="100" style="text-align: center">
+                                    <p:inputText value="#{cambio_imp.qtdeInicial}" style="width:90px !important; text-align: center"/>
+                                </p:column>
+                                <p:column headerText="PERCENTUAL (%) CRESCIMENTO MENSAL" width="100"  style="text-align: center">  
+                                    <p:inputText value="#{cambio_imp.percCrescimentoMensal}" style="width:90px !important; text-align: center"/>
+                                </p:column>
+                                <p:column headerText="QTDE. MENSAL" width="100"  style="text-align: center">  
+                                    <p:inputText value="#{cambio_imp.qtdeMensal}" style="width:90px !important; text-align: center"/>
+                                </p:column>
+                            </p:dataTable>
+                        </p:fieldset>
+                        <p:fieldset legend="2 - EXPORTAÇÃO" toggleable="true" collapsed="true" style="font-size: 12px; font-family: Lucida Grande,Lucida Sans,Arial,sans-serif;">
+                            <p:dataTable var="exportacao" id="dt_exportacao" style="table-layout: fixed; font-size: 12px; margin-top: 10px; font-family: Lucida Grande,Lucida Sans,Arial,sans-serif;" 
+                                         paginator="false" value="#{beanMain.exportacao}"  editable="true" editMode="cell">
+                                <p:column headerText="ENTIDADE" width="200">
+                                    <h:outputText value="#{exportacao.entidade}"/>
+                                </p:column>
+                                <p:column headerText="ID." width="10" style="text-align: center">
+                                    <h:outputText value="#{exportacao.id}"/>
+                                </p:column>
+                                <p:column headerText="QUESTÃO">
+                                    <h:outputText value="#{exportacao.questao}"/>
+                                </p:column>
+                                <p:column headerText="SIM / NÃO"  width="100" style="text-align: center">
+                                    <p:selectOneMenu id="console" value="#{exportacao.respostaSimNao}" style="width:70px !important">
+                                        <f:selectItem itemLabel="Sim" itemValue="S" />
+                                        <f:selectItem itemLabel="Não" itemValue="N" />
+                                    </p:selectOneMenu>
+                                </p:column>
+                                <p:column headerText="QTDE. INICIAL (MIGRAÇÃO)" width="100" style="text-align: center">
+                                    <p:inputText value="#{exportacao.qtdeInicial}" style="width:90px !important; text-align: center"/>
+                                </p:column>
+                                <p:column headerText="PERCENTUAL (%) CRESCIMENTO MENSAL" width="100"  style="text-align: center">  
+                                    <p:inputText value="#{exportacao.percCrescimentoMensal}" style="width:90px !important; text-align: center"/>
+                                </p:column>
+                                <p:column headerText="QTDE. MENSAL" width="100"  style="text-align: center">  
+                                    <p:inputText value="#{exportacao.qtdeMensal}" style="width:90px !important; text-align: center"/>
+                                </p:column>  
+                            </p:dataTable>
+                        </p:fieldset>
+                        <p:fieldset legend="10 - CÂMBIO EXPORTAÇÃO" toggleable="true" collapsed="true" style="font-size: 12px; font-family: Lucida Grande,Lucida Sans,Arial,sans-serif;">
+                            <p:dataTable var="cambio_exp" id="dt_cambio_exp" style="table-layout: fixed; font-size: 12px; margin-top: 10px; font-family: Lucida Grande,Lucida Sans,Arial,sans-serif;" 
+                                         paginator="false" value="#{beanMain.cambio_exp}"  editable="true" editMode="cell">
+                                <p:column headerText="ENTIDADE" width="200">
+                                    <h:outputText value="#{cambio_exp.entidade}"/>
+                                </p:column>
+                                <p:column headerText="ID." width="10" style="text-align: center">
+                                    <h:outputText value="#{cambio_exp.id}"/>
+                                </p:column>
+                                <p:column headerText="QUESTÃO">
+                                    <h:outputText value="#{cambio_exp.questao}"/>
+                                </p:column>
+                                <p:column headerText="SIM / NÃO"  width="100" style="text-align: center">
+                                    <p:selectOneMenu id="console" value="#{cambio_exp.respostaSimNao}" style="width:70px !important">
+                                        <f:selectItem itemLabel="Sim" itemValue="S" />
+                                        <f:selectItem itemLabel="Não" itemValue="N" />
+                                    </p:selectOneMenu>
+                                </p:column>
+                                <p:column headerText="QTDE. INICIAL (MIGRAÇÃO)" width="100" style="text-align: center">
+                                    <p:inputText value="#{cambio_exp.qtdeInicial}" style="width:90px !important; text-align: center"/>
+                                </p:column>
+                                <p:column headerText="PERCENTUAL (%) CRESCIMENTO MENSAL" width="100"  style="text-align: center">  
+                                    <p:inputText value="#{cambio_exp.percCrescimentoMensal}" style="width:90px !important; text-align: center"/>
+                                </p:column>
+                                <p:column headerText="QTDE. MENSAL" width="100"  style="text-align: center">  
+                                    <p:inputText value="#{cambio_exp.qtdeMensal}" style="width:90px !important; text-align: center"/>
+                                </p:column> 
+                            </p:dataTable>
+                        </p:fieldset>
+                        <p:outputLabel styleClass="sub_titulo" value="Obs: Antes de enviar, verifique se todas informações acima foram preenchidas corretamente." />
+                        <br></br>
+                        <p:commandButton id="cb_envia" 
+                                         process="@form"
+                                         update="@form frm_arquivo:dt_arquivo"
+                                         actionListener="#{beanMain.geraDadosSizing()}"
+                                         value="ENVIAR INFORMAÇÕES" 
+                                         style="margin-top: 10px; font-size: 12px; font-family: Lucida Grande,Lucida Sans,Arial,sans-serif;" >
+
+                        </p:commandButton>
+                        <p:tooltip for="cb_envia" value="Enviar dados para cálculo do sizing." style="font-size: 11px; font-family: Lucida Grande,Lucida Sans,Arial,sans-serif;"/>
+                    </h:form>
+                    <p:separator />
+                    <p:separator />
+                    <p:separator />
+                    <p:separator />
+                    <p:separator />
+                    <p:separator />
+                    <p:fieldset legend="ARQUIVOS PARA DOWNLOAD" toggleable="true" collapsed="true" style="font-size: 12px; font-family: Lucida Grande,Lucida Sans,Arial,sans-serif;">
+                        <h:form id="frm_arquivo">
+                            <p:dataTable id="dt_arquivo" rows="3" paginator="true"  value="#{beanMain.arquivos}" var="arquivo">
+                                <p:column headerText="Arquivo">
+                                    <h:outputText value="#{arquivo.nome}" />
+                                </p:column>
+                                <p:column headerText="Download"> 
+                                    <p:commandLink process="@this"
+                                                   ajax="false"
+                                                   update="frm_arquivo"
+                                                   actionListener="#{beanMain.downloadArquivo(arquivo)}">
+                                        <p:graphicImage title="download" 
+                                                        style="margin-bottom: -4px; margin-right: 5px; border: none !important" 
+                                                        url="#{resource['images/down.png']}"/>
+                                        <p:fileDownload value="#{beanMain.trDownload}" />
+                                    </p:commandLink>
+                                </p:column>
+                            </p:dataTable>
+                        </h:form>
+                    </p:fieldset>
+                </ui:insert>
+            </div>
+        </div>
+    </h:body>
+</html>
